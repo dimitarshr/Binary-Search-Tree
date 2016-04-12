@@ -151,19 +151,24 @@ void binary_tree::remove(int value)
 		this->tree = removeNode(value, tree);
 	}
 }
-
+// This function is of type bool and checks if the given value exists in the Binary Seacrh Tree.
 bool existsPrivate(node *root, int value){
-
+	// While the current node is different from 'nullptr' I continue searching for the value.
 	while (root!=nullptr){
+		// If I find the correct value, I stop iterating the through the while loop.
 		if (root->data == value)
 			break;
+		// If the wanted value us smaller than the value of the current node, I go to the left.
 		else if (value < root->data)
 			root = root->left;
+		// If the wanted value us greater than the value of the current node, I go to the right.
 		else if (value > root->data)
 			root = root->right;
 	}
+	// If the node after the iteration is 'nullptr', that means that there was no match.
 	if (root == nullptr)
 		return false;
+	// If I find a match I retrun 'true'.
 	if (root->data == value)
 		return true;
 	return false;
@@ -174,8 +179,8 @@ bool binary_tree::exists(int value) const
 {
 	return existsPrivate(tree, value); 
 }
-
-std::string inorderPrivate(node *root){		
+// This function returns a string of the inordered values of the Binary Search Tree.
+std::string inorderPrivate(node *root){
 		if (root->left != nullptr && root->right != nullptr)
 			return 	inorderPrivate(root->left) + " " + std::to_string(root->data) + " " + inorderPrivate(root->right);
 		else if (root->left == nullptr && root->right == nullptr)
@@ -240,10 +245,10 @@ std::string binary_tree::postorder() const
 // Copy assignment operator
 binary_tree& binary_tree::operator=(const binary_tree &other)
 {
-	/*binary_tree *new_tree = new binary_tree(other);
-	return *new_tree;
-	delete new_tree;*/
-	return binary_tree(other); 
+	node* new_node =  newTree((other.tree));
+	deleteTree (&(this->tree));
+	this->tree = new_node;
+	return *this;
 }
 
 // Checks if two trees are equal
